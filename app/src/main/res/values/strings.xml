@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Learn Service</string>
+    <string name="service">Service</string>
+    <string name="foreground_service">Foreground service</string>
+</resources>
