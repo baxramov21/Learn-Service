@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity() {
         binding.foregroundService.setOnClickListener {
             ContextCompat.startForegroundService(this, MyForegroundService.newIntent(this))
         }
+
+        binding.intentService.setOnClickListener {
+            startService(MyIntentService.newIntent(this))
+        }
     }
 
     private fun showNotification() {
