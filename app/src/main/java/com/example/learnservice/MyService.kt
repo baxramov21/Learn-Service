@@ -26,6 +26,7 @@ class MyService : Service() {
                 delay(1000)
                 Log.d("SERVICE_Of_NAZAR", i.toString())
             }
+            stopSelf()
         }
         return  START_STICKY
     }

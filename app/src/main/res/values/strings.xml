@@ -3,4 +3,5 @@
     <string name="service">Service</string>
     <string name="foreground_service">Foreground service</string>
     <string name="intent_service">Intent service</string>
+    <string name="job_scheduler">Job Scheduler</string>
 </resources>

@@ -29,6 +29,8 @@
         android:text="@string/intent_service" />
 
     <Button
+        android:id="@+id/job_service"
+        android:text="@string/job_scheduler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp" />
