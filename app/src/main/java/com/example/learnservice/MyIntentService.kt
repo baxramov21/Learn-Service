@@ -49,7 +49,7 @@ class MyIntentService : IntentService(SERVICE_NAME) {
     }
 
     override fun onHandleIntent(p0: Intent?) {
-        for (i in 0..10) {
+        for (i in 0..5) {
             Thread.sleep(1000)
             Log.d(TAG, i.toString())
         }

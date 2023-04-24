@@ -2,7 +2,6 @@ package com.example.learnservice
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -24,17 +23,15 @@ class MyJobService : JobService() {
         Log.d(TAG, "OnStartJob")
         coroutine.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                var dequeuedWork = jobParameters?.dequeueWork()
-                while (dequeuedWork != null) {
-                    val page = dequeuedWork.intent.extras?.getInt(PAGE) ?: 0
-                    for (p in 0..page) {
+                var workItem = jobParameters?.dequeueWork()
+                while (workItem != null) {
+                    val page = workItem.intent.extras?.getInt(PAGE) ?: 0
                         for (i in 0..5) {
                             delay(1000)
                             Log.d(TAG, "$page $i")
                         }
-                    }
-                    jobParameters?.completeWork(dequeuedWork)
-                    dequeuedWork = jobParameters?.dequeueWork()
+                    jobParameters?.completeWork(workItem)
+                    workItem = jobParameters?.dequeueWork()
                 }
                 jobFinished(jobParameters, false)
             }
@@ -54,8 +51,8 @@ class MyJobService : JobService() {
 
 
     companion object {
-        fun newIntent(context: Context, page: Int): Intent {
-            return Intent(context, MyJobService::class.java).apply {
+        fun newIntent(page: Int): Intent {
+            return Intent().apply {
                 putExtra(PAGE, page)
             }
         }

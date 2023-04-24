@@ -11,8 +11,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.example.learnservice.databinding.ActivityMainBinding
-import kotlinx.coroutines.joinAll
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var page = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +52,22 @@ class MainActivity : AppCompatActivity() {
             val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val intent = MyJobService.newIntent(this, page++)
+                val intent = MyJobService.newIntent(page++)
                 jobScheduler.enqueue(jobInfo, JobWorkItem(intent))
             }
+        }
+
+        binding.jobIntentService.setOnClickListener {
+            MyJobIntentService.enqueue(this, page++)
+        }
+
+        binding.workManager.setOnClickListener {
+            val workManager = WorkManager.getInstance(applicationContext)
+            workManager.enqueueUniqueWork(
+                MyWorkManager.WORK_NAME,
+                ExistingWorkPolicy.APPEND,
+                MyWorkManager.makeWorkRequest(page++)
+            )
         }
     }
 
